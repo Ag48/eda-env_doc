@@ -14,7 +14,8 @@ jobs:
           paths: 
             - build
   deploy:
-    # docker: 
+    docker:
+      - image: hiroyukionaka/pandoc-lualatex-ja 
         # working_directory: /tmp
     steps:
         - run: 
