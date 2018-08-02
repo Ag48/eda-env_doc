@@ -3,26 +3,20 @@ jobs:
   build:
     docker:
       - image: hiroyukionaka/pandoc-lualatex-ja 
-    working_directory: /tmp
+        #  working_directory: /tmp
     steps:
       - checkout
-      - run:
-          name: Greeting
-          command: echo Hello, world.
-      - run:
-          name: Print the Current Time
-          command: date
       - run: 
           name: Compile TeX to PDF
           command: make all
       - save_cache: 
           key: build-{{ .Revision }}
           paths: 
-            - /tmp/build
+            - build
   deploy:
     docker: 
       - image: circleci/golang
-    working_directory: /tmp
+        # working_directory: /tmp
     steps:
         - run: 
             name: compile gdrive
