@@ -37,4 +37,11 @@ jobs:
              #                                                 # 成果物のディレクトリを丸ごとデプロイ
              gdrive --config $(pwd) --service-account credential.json upload -p ${fname}
             
-    
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - deploy:
+        requires:
+          - build
