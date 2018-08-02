@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: hiroyukionaka/pandoc-lualatex-ja 
-    working_directory: ~/wd
+    working_directory: /tmp
     steps:
       - checkout
       - run:
@@ -18,11 +18,11 @@ jobs:
       - save_cache: 
           key: build-{{ .Revision }}
           paths: 
-            - ~/wd/build
+            - /tmp/build
   deploy:
     docker: 
       - image: circleci/golang
-    working_directory: ~/wd
+    working_directory: /tmp
     steps:
         - run: 
             name: compile gdrive
@@ -32,7 +32,7 @@ jobs:
             command: mkdir build && chmod -R 777 build
         - run: 
             name: check pwd
-            command: ls -lr
+            command: pwd && ls -lr
         - restore_cache: 
             keys:
               - build-{{ .Revision }}
