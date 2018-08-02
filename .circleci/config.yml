@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: stomoki/luatexja_go
+    working_directory: ~/wd
     steps:
       - checkout
       - run: 
@@ -15,6 +16,7 @@ jobs:
   deploy:
     docker:
       - image: stomoki/luatexja_go
+    working_directory: ~/wd
     steps:
         - run: apt-get install git -y
         - run: 
@@ -32,7 +34,7 @@ jobs:
         - deploy: 
             command: | 
               echo $GOOGLE_SERVICE_ACCOUNT_CREDENTIAL > credential.json
-              fname=eda_env_doc_$(date +%Y%m%d_%H%M%S).pdf && mv ~/build/eda_env_doc.pdf ${fname}
+              fname=eda_env_doc_$(date +%Y%m%d_%H%M%S).pdf && mv ~/wd/build/eda_env_doc.pdf ${fname}
               gdrive --config $(pwd) --service-account credential.json upload -p ${fname}
             
 workflows:
