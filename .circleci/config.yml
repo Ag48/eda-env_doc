@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: hiroyukionaka/pandoc-lualatex-ja 
-        #    working_directory: ~/wd
+    working_directory: ~/wd
     steps:
       - checkout
       - run:
@@ -18,11 +18,11 @@ jobs:
       - save_cache: 
           key: build-{{ .Revision }}
           paths: 
-            - ~/
-          # - ~wd/build
+            - ~/wd/build
   deploy:
     docker: 
       - image: circleci/golang
+    working_directory: ~/wd
     steps:
         - run: 
             name: compile gdrive
@@ -34,7 +34,7 @@ jobs:
             name: send compiled manuscript
             command: | 
               echo $GOOGLE_SERVICE_ACCOUNT_CREDENTIAL > credential.json
-              fname=eda_env_doc_$(date +%Y%m%d_%H%M%S).pdf && mv build/eda_env_doc.pdf ${fname}
+              fname=eda_env_doc_$(date +%Y%m%d_%H%M%S).pdf && mv ~/wb/build/eda_env_doc.pdf ${fname}
               gdrive --config $(pwd) --service-account credential.json upload -p ${fname}
             
 workflows:
