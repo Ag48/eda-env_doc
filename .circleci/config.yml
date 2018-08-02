@@ -27,11 +27,13 @@ jobs:
         - run: 
             name: compile gdrive
             command: go get github.com/prasmussen/gdrive
+        - run: 
+            name: add permission
+            command: chmod -R 777 .
         - restore_cache: 
             keys:
               - build-{{ .Revision }}
-        - run: 
-            name: send compiled manuscript
+        - deploy: 
             command: | 
               echo $GOOGLE_SERVICE_ACCOUNT_CREDENTIAL > credential.json
               fname=eda_env_doc_$(date +%Y%m%d_%H%M%S).pdf && mv ~/wb/build/eda_env_doc.pdf ${fname}
