@@ -35,7 +35,7 @@ jobs:
             command: | 
               echo $GOOGLE_SERVICE_ACCOUNT_CREDENTIAL > credential.json
               fname=eda_env_doc_$(date +%Y%m%d_%H%M%S).pdf && mv ~/wd/build/eda_env_doc.pdf ${fname}
-              gdrive --config $(pwd) --service-account credential.json upload -p ${fname}
+              gdrive --config $(pwd) --service-account credential.json upload ${fname}
             
 workflows:
   version: 2
