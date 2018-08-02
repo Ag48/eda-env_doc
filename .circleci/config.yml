@@ -25,8 +25,8 @@ jobs:
       - image: circleci/golang
     steps:
         - run: 
-          name: compile gdrive
-          command: go get github.com/prasmussen/gdrive
+            name: compile gdrive
+            command: go get github.com/prasmussen/gdrive
         - restore_cache: 
             keys:
               - build-{{ .Revision }}
