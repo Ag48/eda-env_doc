@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: hiroyukionaka/pandoc-lualatex-ja 
+        #    working_directory: ~/wd
     steps:
       - checkout
       - run:
@@ -14,3 +15,26 @@ jobs:
       - run: 
           name: Compile TeX to PDF
           command: make all
+      - save_cache: 
+          key: build-{{ .Revision }}
+          paths: 
+            - ~/
+          # - ~wd/build
+  deploy:
+    docker: 
+      - image: circleci/golang
+    steps:
+        - run: go get github.com/prasmussen/gdrive
+        - restore_cache: 
+            keys:
+              - build-{{ .Revision }}
+        - deploy: 
+          command: | 
+             # 環境変数から認証情報を取得してJSONファイルに出力
+             echo $GOOGLE_SERVICE_ACCOUNT_CREDENTIAL > credential.json
+             #                         # 成果物のディレクトリ名を日時でリネーム
+             fname=eda_env_doc_$(date +%Y%m%d_%H%M%S).pdf && mv build/eda_env_doc.pdf ${fname}
+             #                                                 # 成果物のディレクトリを丸ごとデプロイ
+             gdrive --config $(pwd) --service-account credential.json upload -p ${fname}
+            
+    
