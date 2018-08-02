@@ -14,10 +14,12 @@ jobs:
           paths: 
             - build
   deploy:
-    docker: 
-      - image: circleci/golang
+    # docker: 
         # working_directory: /tmp
     steps:
+        - run: 
+            name: install golang
+            command: apt-get install golang-go -y && go version
         - run: 
             name: compile gdrive
             command: go get github.com/prasmussen/gdrive
