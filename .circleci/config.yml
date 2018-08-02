@@ -24,15 +24,18 @@ jobs:
     docker: 
       - image: circleci/golang
     steps:
-        - run: go get github.com/prasmussen/gdrive
+        - run: 
+          name: compile gdrive
+          command: go get github.com/prasmussen/gdrive
         - restore_cache: 
             keys:
               - build-{{ .Revision }}
-        - deploy: 
-          command: | 
-            echo $GOOGLE_SERVICE_ACCOUNT_CREDENTIAL > credential.json
-            fname=eda_env_doc_$(date +%Y%m%d_%H%M%S).pdf && mv build/eda_env_doc.pdf ${fname}
-            gdrive --config $(pwd) --service-account credential.json upload -p ${fname}
+        - run: 
+            name: send compiled manuscript
+            command: | 
+              echo $GOOGLE_SERVICE_ACCOUNT_CREDENTIAL > credential.json
+              fname=eda_env_doc_$(date +%Y%m%d_%H%M%S).pdf && mv build/eda_env_doc.pdf ${fname}
+              gdrive --config $(pwd) --service-account credential.json upload -p ${fname}
             
 workflows:
   version: 2
