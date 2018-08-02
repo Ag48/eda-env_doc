@@ -30,12 +30,9 @@ jobs:
               - build-{{ .Revision }}
         - deploy: 
           command: | 
-             # 環境変数から認証情報を取得してJSONファイルに出力
-             echo $GOOGLE_SERVICE_ACCOUNT_CREDENTIAL > credential.json
-             #                         # 成果物のディレクトリ名を日時でリネーム
-             fname=eda_env_doc_$(date +%Y%m%d_%H%M%S).pdf && mv build/eda_env_doc.pdf ${fname}
-             #                                                 # 成果物のディレクトリを丸ごとデプロイ
-             gdrive --config $(pwd) --service-account credential.json upload -p ${fname}
+            echo $GOOGLE_SERVICE_ACCOUNT_CREDENTIAL > credential.json
+            fname=eda_env_doc_$(date +%Y%m%d_%H%M%S).pdf && mv build/eda_env_doc.pdf ${fname}
+            gdrive --config $(pwd) --service-account credential.json upload -p ${fname}
             
 workflows:
   version: 2
