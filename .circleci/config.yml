@@ -18,7 +18,6 @@ jobs:
       - image: stomoki/luatexja_go
     working_directory: ~/wd
     steps:
-        - run: apt-get install git -y
         - run: 
             name: compile gdrive
             command: go get github.com/prasmussen/gdrive
@@ -32,6 +31,7 @@ jobs:
             keys:
               - build-{{ .Revision }}
         - deploy: 
+            name: upload pdf
             command: | 
               echo $GOOGLE_SERVICE_ACCOUNT_CREDENTIAL > credential.json
               fname=eda_env_doc_$(date +%Y%m%d_%H%M%S).pdf && mv ~/wd/build/eda_env_doc.pdf ${fname}
