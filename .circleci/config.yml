@@ -3,7 +3,6 @@ jobs:
   build:
     docker:
       - image: stomoki/luatexja_go
-        #  working_directory: /tmp
     steps:
       - checkout
       - run: 
@@ -16,8 +15,8 @@ jobs:
   deploy:
     docker:
       - image: stomoki/luatexja_go
-        # working_directory: /tmp
     steps:
+        - run: apt-get install git -y
         - run: 
             name: compile gdrive
             command: go get github.com/prasmussen/gdrive
