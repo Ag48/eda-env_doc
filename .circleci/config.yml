@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: hiroyukionaka/pandoc-lualatex-ja 
+      - image: stomoki/luatexja_go
         #  working_directory: /tmp
     steps:
       - checkout
@@ -15,12 +15,9 @@ jobs:
             - build
   deploy:
     docker:
-      - image: hiroyukionaka/pandoc-lualatex-ja 
+      - image: stomoki/luatexja_go
         # working_directory: /tmp
     steps:
-        - run: 
-            name: install golang
-            command: apt-get install golang-go -y && go version
         - run: 
             name: compile gdrive
             command: go get github.com/prasmussen/gdrive
