@@ -1,7 +1,34 @@
 \documentclass[a4j]{ltjsarticle}
 \usepackage{luatexja}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage[hypcap=true]{subcaption}
+\usepackage[bookmarks=true,bookmarksnumbered=true,setpagesize=false]{hyperref}
+\hypersetup {
+  colorlinks, 
+  anchorcolor=black,
+  linkcolor={red!50!black},
+  citecolor={blue!50!black},
+  pdfencoding=auto,
+  pdfauthor={Tomoki Sugiura},
+  pdftitle={EDA Enviroment with Docker},
+}
+
+\title{
+  Dockerを用いたEDA環境運用指南
+}
+\author{杉浦友紀}
+\date{\today}
 
 \begin{document}
-\section{初めてのLua\TeX-ja}
-吾輩は猫である．名前はまだない．
+\maketitle
+\tableofcontents
+
+\input{tex/introduction}
+\input{tex/env_setup}
+\input{tex/how_to_write_rtl}
+\input{tex/conclusion}
+
 \end{document}
